@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Test MoC</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+        p {
+            margin: 5px;
+            font-size: 20px;
+        }
+        .text-input {
+            padding: 4px;
+            border: 2px solid grey;
+            border-radius: 10px;
+            font-size: 24px;
+            outline: none;
+        }
+        .text-input:focus {
+            border-color: #3f3f3f;
+        }
+        .submit-button {
+            padding: 4px;
+            background: cornsilk;
+            border: 2px solid grey;
+            border-radius: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            outline: none;
+        }
+        .submit-button:hover {
+            background: #dad3ba;
+        }
+        .submit-button:active {
+            background: #b6af9f;
+        }
+    </style>
+</head>
+<body>
+<form onSubmit="appendTextElement(); return false;">
+    <input type="text" id="input" class="text-input" placeholder="enter your text">
+    <input type="button" id="submit" class="submit-button" value="Submit">
+</form>
+
+<script>
+  document.getElementById("submit").addEventListener('click', appendTextElement);
+
+  function appendTextElement() {
+    const inputText = document.getElementById("input").value;
+    const textElement = document.createElement("p");
+
+    document.getElementById("input").value = '';
+    textElement.innerText = inputText;
+
+    if (includeSpecSymbol(inputText)) {
+      textElement.style.color = 'red';
+    } else if (inputText.length > 3) {
+      textElement.style.color = 'green';
+    }
+
+    document.body.appendChild(textElement);
+  }
+
+  function includeSpecSymbol(string) {
+    const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+    return format.test(string);
+  }
+</script>
+</body>
+</html>
